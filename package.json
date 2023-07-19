@@ -15,6 +15,10 @@
         "lint": "eslint src --ext ts"
     },
     "devDependencies": {
-        "typescript": "^5.1.6"
+        "typescript": "^5.1.6",
+        "@types/three": "^0.154.0",
+        "camera-controls": "^2.7.0",
+        "d3": "^7.8.5",
+        "three": "^0.154.0"
     }
 }
