@@ -10,7 +10,7 @@ export function createDocElem<T extends HTMLElement>(tagName: string) {
  * @param number[] | ArrayLike<number> - array of numbers 
  * @returns number[] the minimum and maximum of the array, or undefined if the array is empty.
 */
-export function minMax(arr: number[] | ArrayLike<number>) {
+export function minMax(arr: number[] | ArrayLike<number>): [number, number] | undefined {
     if (arr.length === 0) {
         return undefined;
     }

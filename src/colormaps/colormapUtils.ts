@@ -8,11 +8,10 @@ function makeInterpolationFun(
     return (x: number) => autoToRgb(baseFun(x));
 }
 
-export function computeMapColors(map: number[], colorMapName: ColorInterpolateName) {
-    const [minCol, maxCol] = minMax(map) ?? [0, 0];
+export function computeMapColors(map: number[], colorMapName: ColorInterpolateName, colorLimits: [number, number]) {
     const interpolationFun = makeInterpolationFun(colorMapName);
     return Array.from(map)
-        .map((x) => interpolationFun((x - minCol) / (maxCol - minCol)))
+        .map((x) => interpolationFun((x - colorLimits[0]) / (colorLimits[1] - colorLimits[0])))
         .flat();
 }
 
