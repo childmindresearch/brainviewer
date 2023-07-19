@@ -7,19 +7,29 @@
         "type": "git",
         "url": "https://github.com/cmi-dair/brainviewer"
     },
+    "type": "module",
     "bugs": {
         "url": "https://github.com/cmi-dair/brainviewer/issues"
     },
     "scripts": {
+        "build": "rimraf dist && rollup -c",
+        "compile": "$([[ ! -d build ]] && mkdir build) && tsc",
         "tests": "echo \"Error: no test specified\" && exit 1",
         "lint": "eslint src --ext ts"
     },
     "devDependencies": {
+        "@open-wc/building-rollup": "^3.0.1",
+        "@rollup/plugin-node-resolve": "^15.1.0",
+        "@rollup/plugin-terser": "^0.4.3",
+        "@rollup/plugin-typescript": "^11.1.2",
         "@types/d3": "^7.4.0",
         "@types/d3-scale-chromatic": "^3.0.0",
         "@types/three": "^0.154.0",
         "camera-controls": "^2.7.0",
         "d3": "^7.8.5",
+        "deepmerge": "^4.3.1",
+        "rimraf": "^5.0.1",
+        "rollup": "^3.26.3",
         "three": "^0.154.0",
         "typescript": "^5.1.6"
     }

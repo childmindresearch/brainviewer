@@ -1,4 +1,7 @@
-./local
+playground
+
+build
+build.map
 
 # Logs
 logs

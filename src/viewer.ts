@@ -1,9 +1,7 @@
 import * as THREE from "three";
 import CameraControls from "camera-controls";
 //import Stats from "stats.js";
-import { getDocElem, minMax } from "./utils";
-import { autoToRgb, hexToRgb } from "./colormaps/colormapUtils";
-import { colorInterpolates } from "./colormaps/d3ColorSchemes";
+import { getDocElem } from "./utils";
 import { Legend } from "./colormaps/legend";
 import { MeshColors, Surface, SurfaceMesh } from "./brainViewer";
 
@@ -159,7 +157,7 @@ export class ViewerClient {
         } else {
 
             material = new THREE.MeshLambertMaterial({
-                color: /*new THREE.Color(*/"yellow"/*)*/,
+                color: /*new THREE.Color(*/"orange"/*)*/,
                 vertexColors: false,
             });
 
