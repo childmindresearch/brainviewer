@@ -1,0 +1,38 @@
+name: npm run test
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  testing:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 19
+          cache: npm
+          cache-dependency-path: package-lock.json
+      - run: |
+          npm ci
+          npm run build
+          npm run test
+
+  lint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Use Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "19.x"
+      - run: |
+          npm install
+          npm run lint
