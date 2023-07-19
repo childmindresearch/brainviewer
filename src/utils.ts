@@ -6,6 +6,10 @@ export function createDocElem<T extends HTMLElement>(tagName: string) {
     return document.createElement(tagName) as T;
 }
 
+/**
+ * @param number[] | ArrayLike<number> - array of numbers 
+ * @returns number[] the minimum and maximum of the array, or undefined if the array is empty.
+*/
 export function minMax(arr: number[] | ArrayLike<number>) {
     if (arr.length === 0) {
         return undefined;
@@ -21,30 +25,4 @@ export function minMax(arr: number[] | ArrayLike<number>) {
         }
     }
     return [min, max];
-}
-
-export function hexToRgb(hex: string): [number, number, number] {
-    const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-    return result
-        ? [
-              parseInt(result[1], 16) / 255,
-              parseInt(result[2], 16) / 255,
-              parseInt(result[3], 16) / 255,
-          ]
-        : [0, 0, 0];
-}
-
-export function rgbStrToRgb(rgbStr: string): [number, number, number] {
-    const result = rgbStr.substring(4, rgbStr.length - 1);
-    return result.split(", ").map((x) => parseInt(x) / 255) as [
-        number,
-        number,
-        number
-    ];
-}
-
-export function autoToRgb(colorStr: string): [number, number, number] {
-    return colorStr.startsWith("#")
-        ? hexToRgb(colorStr)
-        : rgbStrToRgb(colorStr);
 }
