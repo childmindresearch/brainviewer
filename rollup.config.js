@@ -10,5 +10,5 @@ export default {
     file: 'dist/bundle.js',
     format: 'es'
   },
-  plugins: [typescript(), terser(), nodeResolve(), rollupAdapter()]
+  plugins: [typescript(), terser(), nodeResolve()]
 }
