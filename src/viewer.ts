@@ -27,16 +27,17 @@ export class ViewerClient {
 
     private legend: Legend;
 
-    public constructor(surface: Surface) {
+    public constructor(elemViewer: HTMLElement, elemViewerRoot: HTMLElement, surface: Surface) {
         this.legend = new Legend();
         this.legend.init();
 
         this.surface = surface;
-
-        this.viewerRoot = getDocElem("viewer");
+        console.log(this.surface);
+        //this.viewerRoot = getDocElem("viewer");
+        this.viewerRoot = elemViewerRoot;
         this.viewerRoot.innerHTML = "";
-
-        this.viewerUi = getDocElem("viewer-ui");
+        this.viewerUi = elemViewer;
+        //this.viewerUi = getDocElem("viewer-ui");
 
         this.scene = new THREE.Scene();
         this.camera = new THREE.PerspectiveCamera(
