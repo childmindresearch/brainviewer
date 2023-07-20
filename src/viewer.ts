@@ -14,6 +14,8 @@ export type SerializableViewerState = {
 };
 
 export class ViewerClient {
+    public controls: CameraControls;
+    
     private viewerRoot: HTMLElement;
     private viewerUi: HTMLElement;
     private scene: THREE.Scene;
@@ -57,11 +59,11 @@ export class ViewerClient {
 
         // eslint-disable-next-line @typescript-eslint/naming-convention
         CameraControls.install({ THREE: THREE });
-        const controls = new CameraControls(
+        this.controls = new CameraControls(
             this.camera,
             this.renderer.domElement
         );
-        controls.minZoom = 0.1;
+        this.controls.minZoom = 0.1;
 
         const gridHelper = new THREE.GridHelper(1000, 100);
         this.scene.add(gridHelper);
@@ -86,7 +88,7 @@ export class ViewerClient {
             //stats.begin();
 
             const delta = clock.getDelta();
-            const hasControlsUpdated = controls.update(delta);
+            const hasControlsUpdated = this.controls.update(delta);
 
             //stats.end();
 
