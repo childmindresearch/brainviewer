@@ -13,11 +13,35 @@ export type SerializableViewerState = {
     };
 };
 
+interface cameraChange {
+    position?: {
+        x: number;
+        y: number;
+        z: number;
+    };
+    up?: {
+        x: number;
+        y: number;
+        z: number;
+    };
+    scale?: {
+        x: number;
+        y: number;
+        z: number;
+    };
+    rotation?: {
+        x: number;
+        y: number;
+        z: number;
+    }
+}
+
 export class ViewerClient {
     private viewerRoot: HTMLElement;
     private viewerUi: HTMLElement;
     private scene: THREE.Scene;
     private camera: THREE.PerspectiveCamera;
+    private controls: CameraControls;
     private renderer: THREE.WebGLRenderer;
     private raycaster: THREE.Raycaster;
 
@@ -57,11 +81,11 @@ export class ViewerClient {
 
         // eslint-disable-next-line @typescript-eslint/naming-convention
         CameraControls.install({ THREE: THREE });
-        const controls = new CameraControls(
+        this.controls = new CameraControls(
             this.camera,
             this.renderer.domElement
         );
-        controls.minZoom = 0.1;
+        this.controls.minZoom = 0.1;
 
         const gridHelper = new THREE.GridHelper(1000, 100);
         this.scene.add(gridHelper);
@@ -86,7 +110,7 @@ export class ViewerClient {
             //stats.begin();
 
             const delta = clock.getDelta();
-            const hasControlsUpdated = controls.update(delta);
+            const hasControlsUpdated = this.controls.update(delta);
 
             //stats.end();
 
@@ -152,6 +176,22 @@ export class ViewerClient {
                 callable(event)
             }
         );
+    }
+
+    public setCameraPosition(camera: cameraChange): void {
+        for (const [key, value] of Object.entries(camera)) {
+            if (key === "position") {
+                console.log(this.camera)
+                this.controls.setPosition(value.x, value.y, value.z);
+                console.log(this.camera)
+            } else if (key === "up") {
+                this.camera.up.set(value.x, value.y, value.z);
+            } else if (key === "scale") {
+                this.camera.scale.set(value.x, value.y, value.z);
+            } else if (key === "rotation") {
+                this.camera.rotation.set(value.x, value.y, value.z);
+            }
+        }
     }
 
     public setModel(
