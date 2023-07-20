@@ -31,10 +31,6 @@ export const run = (api_surface: Promise<Response>) => {
           const client = new ViewerClient(surface);
           client.setModel(surface.mesh, surface.colors);
           client.addListener("dblclick", (event: any) => { console.log(event) });
-          client.setCameraPosition({ up: { x: 0, y: -1, z: 0 }, 
-                                     position: { x: 0, y: 0, z: 0 },
-                                     scale: { x: 2, y: 1, z: 1 },
-                                     rotation: { x: 90, y: 90, z: 0}})
       });
     });
 };  
