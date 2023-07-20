@@ -18,4 +18,5 @@ jobs:
           node-version: "14"
       - run: |
           cd pages
+          npm ci
           npm run gh-pages
