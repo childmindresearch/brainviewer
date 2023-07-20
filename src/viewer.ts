@@ -13,29 +13,6 @@ export type SerializableViewerState = {
     };
 };
 
-interface cameraChange {
-    position?: {
-        x: number;
-        y: number;
-        z: number;
-    };
-    up?: {
-        x: number;
-        y: number;
-        z: number;
-    };
-    scale?: {
-        x: number;
-        y: number;
-        z: number;
-    };
-    rotation?: {
-        x: number;
-        y: number;
-        z: number;
-    }
-}
-
 export class ViewerClient {
     public controls: CameraControls;
     
