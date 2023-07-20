@@ -1,4 +1,5 @@
 import { SurfaceMesh, MeshColors, Surface } from "./brainViewer";
+import { getDocElem } from "./utils";
 import { ViewerClient } from "./viewer";
 
 export const run = (api_surface: Promise<Response>) => {
@@ -28,7 +29,9 @@ export const run = (api_surface: Promise<Response>) => {
           const mesh = new SurfaceMesh(new Float32Array(vertices), new Uint32Array(faces));
           const colors = new MeshColors(data_json["human_left"], "Viridis", [-1, 2]);
           const surface = new Surface(mesh, colors);
-          const client = new ViewerClient(surface);
+          const divUi: HTMLElement = getDocElem("viewer-ui");
+          const divViewer: HTMLElement = getDocElem("viewer");
+          const client = new ViewerClient(divUi, divViewer, surface);
           client.setModel(surface.mesh, surface.colors);
           client.addListener("dblclick", (event: any) => { console.log(event) });
       });

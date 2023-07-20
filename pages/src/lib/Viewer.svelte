@@ -18,12 +18,20 @@
       )
         .then((response) => response.json())
         .then((json) => {
-          const vertices = json.xCoordinate
-            .concat(json.yCoordinate)
-            .concat(json.zCoordinate);
-          const faces = json.iFaces.concat(json.jFaces).concat(json.kFaces);
+          const vertices: number[] = [];
+          const faces: number[] = [];
+          for (let i = 0; i < json["xCoordinate"].length; i++) {
+            vertices.push(json["xCoordinate"][i]);
+            vertices.push(json["yCoordinate"][i]);
+            vertices.push(json["zCoordinate"][i]);
+          }
+          for (let i = 0; i < json["iFaces"].length; i++) {
+            faces.push(json["iFaces"][i]);
+            faces.push(json["jFaces"][i]);
+            faces.push(json["kFaces"][i]);
+          }
           return new SurfaceMesh(
-            new Float32Array(vertices, 3),
+            new Float32Array(vertices),
             new Uint32Array(faces)
           );
         })
@@ -44,16 +52,16 @@
 
     async function getViewer() {
       const surface = await getSurface();
-      console.log(surface);
-      return new ViewerClient(divUi, divRoot, surface);
+      const client = new ViewerClient(divUi, divRoot, surface);
+      client.setModel(surface.mesh, surface.colors);
     }
     viewer = getViewer();
   });
 </script>
 
-<div id="viewer-ui" bind:this={divUi} />
-<div id="viewer" bind:this={divRoot} />
-<div id="legend" />
+<div bind:this={divUi} />
+<div bind:this={divRoot} />
+<svg id="legend" />
 
 <style>
   :global(#app) {

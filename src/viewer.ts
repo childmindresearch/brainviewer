@@ -32,6 +32,7 @@ export class ViewerClient {
         this.legend.init();
 
         this.surface = surface;
+        console.log(this.surface);
         //this.viewerRoot = getDocElem("viewer");
         this.viewerRoot = elemViewerRoot;
         this.viewerRoot.innerHTML = "";
