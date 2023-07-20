@@ -19,6 +19,7 @@ export class ViewerClient {
     private scene: THREE.Scene;
     private camera: THREE.PerspectiveCamera;
     private renderer: THREE.WebGLRenderer;
+    private raycaster: THREE.Raycaster;
 
     private surface: Surface;
 
@@ -35,8 +36,6 @@ export class ViewerClient {
 
         this.viewerUi = getDocElem("viewer-ui");
 
-        // setup scene
-
         this.scene = new THREE.Scene();
         this.camera = new THREE.PerspectiveCamera(
             60,
@@ -45,6 +44,8 @@ export class ViewerClient {
             1000
         );
         this.camera.position.set(-150, 100, -100);
+
+        this.raycaster = new THREE.Raycaster();
 
         this.renderer = new THREE.WebGLRenderer();
         this.renderer.setSize(
@@ -125,7 +126,33 @@ export class ViewerClient {
         this.render();
     }
 
-    
+    public addListener(eventName: string, callable: any): void {
+        const raycastEvents = ["click", "dblclick", "mousedown", "mouseup"];
+        if (!raycastEvents.includes(eventName.toLowerCase())) {
+            this.viewerRoot.addEventListener(eventName.toLowerCase(), callable, false);
+            return;
+        }
+
+        this.viewerRoot.addEventListener(
+            eventName.toLowerCase(),
+            (event: any) => {
+                const mouse = new THREE.Vector2();
+                const rect = this.viewerRoot.getBoundingClientRect();
+                mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+                mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
+
+                this.raycaster.setFromCamera(mouse, this.camera);
+
+                const intersects = this.raycaster.intersectObjects(
+                    this.scene.children.filter(
+                        (child) => child.type === "Mesh"
+                    )
+                );
+                event.intersects = intersects[0];
+                callable(event)
+            }
+        );
+    }
 
     public setModel(
         meshUpdated?: SurfaceMesh,
