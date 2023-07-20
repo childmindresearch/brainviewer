@@ -13,7 +13,7 @@
     },
     "scripts": {
         "build": "rimraf dist && rollup -c",
-        "compile": "$([[ ! -d build ]] && mkdir build) && tsc",
+        "dev": "concurrently --kill-others --names rollup,web-dev-server \"rimraf dist && rollup -c -w\" \"web-dev-server --app-index index.html --node-resolve --open --watch\"",
         "tests": "echo \"Error: no test specified\" && exit 1",
         "lint": "eslint src --ext ts"
     },
@@ -25,7 +25,9 @@
         "@types/d3": "^7.4.0",
         "@types/d3-scale-chromatic": "^3.0.0",
         "@types/three": "^0.154.0",
+        "@web/dev-server": "^0.3.0",
         "camera-controls": "^2.7.0",
+        "concurrently": "^8.2.0",
         "d3": "^7.8.5",
         "deepmerge": "^4.3.1",
         "rimraf": "^5.0.1",
