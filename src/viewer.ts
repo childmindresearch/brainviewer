@@ -37,11 +37,12 @@ interface cameraChange {
 }
 
 export class ViewerClient {
+    public controls: CameraControls;
+    
     private viewerRoot: HTMLElement;
     private viewerUi: HTMLElement;
     private scene: THREE.Scene;
     private camera: THREE.PerspectiveCamera;
-    private controls: CameraControls;
     private renderer: THREE.WebGLRenderer;
     private raycaster: THREE.Raycaster;
 
@@ -176,22 +177,6 @@ export class ViewerClient {
                 callable(event)
             }
         );
-    }
-
-    public setCameraPosition(camera: cameraChange): void {
-        for (const [key, value] of Object.entries(camera)) {
-            if (key === "position") {
-                console.log(this.camera)
-                this.controls.setPosition(value.x, value.y, value.z);
-                console.log(this.camera)
-            } else if (key === "up") {
-                this.camera.up.set(value.x, value.y, value.z);
-            } else if (key === "scale") {
-                this.camera.scale.set(value.x, value.y, value.z);
-            } else if (key === "rotation") {
-                this.camera.rotation.set(value.x, value.y, value.z);
-            }
-        }
     }
 
     public setModel(
