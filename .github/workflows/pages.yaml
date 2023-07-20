@@ -4,16 +4,12 @@ permissions:
   contents: write
 
 on:
-  workflow_run:
-    workflows: ["npm run test"]
-    types:
-      - completed
+  push:
     branches:
       - main
 
 jobs:
   build-and-publish-docs:
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
