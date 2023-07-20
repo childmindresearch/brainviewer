@@ -19,11 +19,18 @@ export const run = (api_surface: Promise<Response>) => {
             faces.push(json["jFaces"][i]);
             faces.push(json["kFaces"][i]);
         }
-        const mesh = new SurfaceMesh(new Float32Array(vertices), new Uint32Array(faces));
-        const colors = new MeshColors(Array(10242).fill(1), "Turbo", [0, 1]);
-        const surface = new Surface(mesh, colors);
-        console.log(surface)
-        const client = new ViewerClient(surface);
-        client.setModel(surface.mesh, surface.colors);
+        fetch("http://localhost:8000/features/cross_species?seed_species=human&seed_side=left&seed_vertex=1").then(
+            (response) => {
+                return response.json();
+            }
+        ).then((data_json) => {
+
+          const mesh = new SurfaceMesh(new Float32Array(vertices), new Uint32Array(faces));
+          const colors = new MeshColors(data_json["human_left"], "Viridis", [-1, 2]);
+          const surface = new Surface(mesh, colors);
+          const client = new ViewerClient(surface);
+          client.setModel(surface.mesh, surface.colors);
+          client.addListener("dblclick", (event: any) => { console.log(event) });
+      });
     });
-};
+};  
