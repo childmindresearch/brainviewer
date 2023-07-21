@@ -71,9 +71,9 @@
         return mean;
     }
 
-    let baseScaler = new RollingAutoscaler(0.02, 0, 255);
+    let baseScaler = new RollingAutoscaler(0.01, 0, 255);
     let baseFrac = 0;
-    let highScaler = new RollingAutoscaler(0.02, 0, 255);
+    let highScaler = new RollingAutoscaler(0.01, 0, 255);
     let highFrac = 0;
 
     function callback(data: Uint8Array) {
