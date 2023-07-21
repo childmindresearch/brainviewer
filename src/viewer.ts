@@ -51,6 +51,7 @@ export class ViewerClient {
         this.raycaster = new THREE.Raycaster();
 
         this.renderer = new THREE.WebGLRenderer();
+
         this.renderer.setSize(
             this.viewerRoot.clientWidth,
             (this.viewerRoot?.parentElement?.clientHeight || 400) -
@@ -66,8 +67,8 @@ export class ViewerClient {
         );
         this.controls.minZoom = 0.1;
 
-        const gridHelper = new THREE.GridHelper(1000, 100);
-        this.scene.add(gridHelper);
+        // const gridHelper = new THREE.GridHelper(1000, 100);
+        // this.scene.add(gridHelper);
 
         const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
         this.scene.add(ambientLight);
@@ -127,6 +128,14 @@ export class ViewerClient {
                 this.viewerUi.getBoundingClientRect().bottom
         );
         this.render();
+    }
+
+    public setBackgroundColor(color: string): void {
+        this.renderer.setClearColor(color);
+    }
+
+    public setAlpha(alpha: number): void {
+        this.renderer.setClearAlpha(alpha);
     }
 
     public addListener(eventName: string, callable: any): void {
