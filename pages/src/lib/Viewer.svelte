@@ -6,12 +6,29 @@
     } from "brainviewer/src/brainViewer";
     import { minMax } from "brainviewer/src/utils";
     import { ViewerClient } from "brainviewer/src/viewer";
+    import { spectrogram } from "./spectrogram";
     import { onMount } from "svelte";
     import brainData from "../assets/brain.json";
     import intensityData from "../assets/intensity.json";
 
     let elemViewer;
     let viewer;
+
+    let client: ViewerClient | undefined;
+
+    function callback(data: Uint8Array) {
+      if (!client) return;
+
+      let mean = 0;
+      let num = Math.min(16, data.length);
+      for (let i = 0; i < num; i++) {
+        mean += data[i] * (1/num);
+      }
+
+      client.controls.zoomTo((mean / 255) * 8);
+    }
+
+    spectrogram(callback);
 
     onMount(() => {
         const surfaceMesh = new SurfaceMesh(
@@ -27,7 +44,7 @@
 
         const surface = new Surface(surfaceMesh, colors);
 
-        const client = new ViewerClient(elemViewer, surface);
+        client = new ViewerClient(elemViewer, surface);
         client.setModel(surface.mesh, surface.colors);
     });
 </script>
