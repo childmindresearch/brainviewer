@@ -7,7 +7,7 @@ export async function spectrogram(callback: (data: Uint8Array) => void) {
     const source = audioCtx.createMediaStreamSource(stream);
     source.connect(analyser);
 
-    analyser.fftSize = 2048;
+    analyser.fftSize = 1024;
 
     setInterval(() => {
         const bufferLength = analyser.frequencyBinCount;

@@ -16,16 +16,35 @@
 
     let client: ViewerClient | undefined;
 
+
+    let rollingMin = 0;
+    let rollingMax = 255;
+
     function callback(data: Uint8Array) {
       if (!client) return;
 
+
       let mean = 0;
-      let num = Math.min(16, data.length);
-      for (let i = 0; i < num; i++) {
+      let num = Math.min(300, data.length);
+      for (let i = 20; i < num; i++) {
         mean += data[i] * (1/num);
       }
+      
+      if (mean < rollingMin) {
+        rollingMin = mean;
+      } else {
+        rollingMin = rollingMin * 0.9 + mean * 0.1;
+      }
 
-      client.controls.zoomTo((mean / 255) * 8);
+      if (mean > rollingMax) {
+        rollingMax = mean;
+      } else {
+        rollingMax = rollingMax * 0.9 + mean * 0.1;
+      }
+
+      let fraction = (mean - rollingMin) / (rollingMax - rollingMin);
+
+      client.controls.zoomTo(fraction * 3 + 1, true);
     }
 
     spectrogram(callback);
