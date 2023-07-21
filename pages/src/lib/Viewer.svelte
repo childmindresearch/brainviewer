@@ -28,7 +28,7 @@
 
         const surface = new Surface(surfaceMesh, colors);
 
-        const client = new ViewerClient(divUi, divRoot, surface);
+        const client = new ViewerClient(divRoot, surface);
         client.setModel(surface.mesh, surface.colors);
     });
 </script>

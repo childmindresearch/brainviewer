@@ -1,7 +1,5 @@
 import * as THREE from "three";
 import CameraControls from "camera-controls";
-//import Stats from "stats.js";
-import { getDocElem } from "./utils";
 import { Legend } from "./colormaps/legend";
 import { MeshColors, Surface, SurfaceMesh } from "./brainViewer";
 
@@ -16,8 +14,7 @@ export type SerializableViewerState = {
 export class ViewerClient {
     public controls: CameraControls;
     
-    private viewerRoot: HTMLElement;
-    private viewerUi: HTMLElement;
+    private elemViewer: HTMLElement;
     private scene: THREE.Scene;
     private camera: THREE.PerspectiveCamera;
     private renderer: THREE.WebGLRenderer;
@@ -27,17 +24,13 @@ export class ViewerClient {
 
     private legend: Legend;
 
-    public constructor(elemViewer: HTMLElement, elemViewerRoot: HTMLElement, surface: Surface) {
+    public constructor(elemViewer: HTMLElement, surface: Surface) {
         this.legend = new Legend();
         this.legend.init();
 
         this.surface = surface;
         console.log(this.surface);
-        //this.viewerRoot = getDocElem("viewer");
-        this.viewerRoot = elemViewerRoot;
-        this.viewerRoot.innerHTML = "";
-        this.viewerUi = elemViewer;
-        //this.viewerUi = getDocElem("viewer-ui");
+        this.elemViewer = elemViewer;
 
         this.scene = new THREE.Scene();
         this.camera = new THREE.PerspectiveCamera(
@@ -51,12 +44,12 @@ export class ViewerClient {
         this.raycaster = new THREE.Raycaster();
 
         this.renderer = new THREE.WebGLRenderer();
+        this.elemViewer.innerHTML = "";
         this.renderer.setSize(
-            this.viewerRoot.clientWidth,
-            (this.viewerRoot?.parentElement?.clientHeight || 400) -
-                this.viewerUi.getBoundingClientRect().bottom
+            this.elemViewer.clientWidth,
+            this.elemViewer.clientHeight
         );
-        this.viewerRoot.appendChild(this.renderer.domElement);
+        this.elemViewer.appendChild(this.renderer.domElement);
 
         // eslint-disable-next-line @typescript-eslint/naming-convention
         CameraControls.install({ THREE: THREE });
@@ -117,14 +110,11 @@ export class ViewerClient {
 
     private onWindowResize() {
         this.camera.aspect =
-            this.viewerRoot.clientWidth /
-            ((this.viewerRoot?.parentElement?.clientHeight || 400) -
-                this.viewerUi.getBoundingClientRect().bottom);
+            this.elemViewer.clientWidth / this.elemViewer.clientHeight;
         this.camera.updateProjectionMatrix();
         this.renderer.setSize(
-            this.viewerRoot.clientWidth,
-            (this.viewerRoot?.parentElement?.clientHeight || 400) -
-                this.viewerUi.getBoundingClientRect().bottom
+            this.elemViewer.clientWidth,
+            this.elemViewer.clientHeight
         );
         this.render();
     }
@@ -132,15 +122,15 @@ export class ViewerClient {
     public addListener(eventName: string, callable: any): void {
         const raycastEvents = ["click", "dblclick", "mousedown", "mouseup"];
         if (!raycastEvents.includes(eventName.toLowerCase())) {
-            this.viewerRoot.addEventListener(eventName.toLowerCase(), callable, false);
+            this.elemViewer.addEventListener(eventName.toLowerCase(), callable, false);
             return;
         }
 
-        this.viewerRoot.addEventListener(
+        this.elemViewer.addEventListener(
             eventName.toLowerCase(),
             (event: any) => {
                 const mouse = new THREE.Vector2();
-                const rect = this.viewerRoot.getBoundingClientRect();
+                const rect = this.elemViewer.getBoundingClientRect();
                 mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
                 mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
 

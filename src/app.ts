@@ -31,7 +31,7 @@ export const run = (api_surface: Promise<Response>) => {
           const surface = new Surface(mesh, colors);
           const divUi: HTMLElement = getDocElem("viewer-ui");
           const divViewer: HTMLElement = getDocElem("viewer");
-          const client = new ViewerClient(divUi, divViewer, surface);
+          const client = new ViewerClient(divViewer, surface);
           client.setModel(surface.mesh, surface.colors);
           client.addListener("dblclick", (event: any) => { console.log(event) });
       });
