@@ -99,7 +99,7 @@
 
         const colors = new MeshColors(
             intensityData,
-            "Viridis",
+            "Sinebow",
             minMax(intensityData)
         );
 
