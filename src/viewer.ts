@@ -29,7 +29,6 @@ export class ViewerClient {
         this.legend.init();
 
         this.surface = surface;
-        console.log(this.surface);
         this.elemViewer = elemViewer;
 
         this.scene = new THREE.Scene();
@@ -125,6 +124,24 @@ export class ViewerClient {
 
     public setAlpha(alpha: number): void {
         this.renderer.setClearAlpha(alpha);
+    }
+
+    public setOrbit(orbit: string): void {
+        orbit = orbit.toLowerCase()
+        if (orbit === "origin") {
+            this.controls.setOrbitPoint(0, 0, 0)
+        } else if (orbit === "center") {
+            const vertices = this.surface.mesh.vertices
+            let x = 0, y = 0, z = 0
+            for (let i = 0; i < vertices.length; i += 3) {
+                x += vertices[i] / (vertices.length/3)
+                y += vertices[i+1] / (vertices.length/3)
+                z += vertices[i+2] / (vertices.length/3)
+            }
+            this.controls.setOrbitPoint(x, y, z)
+        } else {
+            console.warn("Unknown orbit point: " + orbit)
+        }
     }
 
     public addListener(eventName: string, callable: any): void {
