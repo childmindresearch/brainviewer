@@ -71,9 +71,9 @@
         return mean;
     }
 
-    let baseScaler = new RollingAutoscaler(0.01, 0, 255);
+    let baseScaler = new RollingAutoscaler(0.02, 0, 255);
     let baseFrac = 0;
-    let highScaler = new RollingAutoscaler(0.01, 0, 255);
+    let highScaler = new RollingAutoscaler(0.02, 0, 255);
     let highFrac = 0;
 
     function callback(data: Uint8Array) {
@@ -85,7 +85,7 @@
         let highMean = arrayMean(Array.from(data), 300, 1024);
         highFrac = highScaler.update(highMean) * 0.8 + highFrac * 0.2;
 
-        client.controls.zoomTo(baseFrac * 5 + 1);
+        client.controls.zoomTo(baseFrac * 2 + 0.1);
         client.controls.rotateTo(highFrac * Math.PI + Math.PI,  Math.PI  * 0.5);
     }
 
@@ -112,7 +112,6 @@
 </script>
 
 <div class="brainViewer" bind:this={elemViewer} />
-<svg id="legend" />
 
 <style>
     :global(#app) {
