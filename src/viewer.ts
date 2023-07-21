@@ -59,8 +59,8 @@ export class ViewerClient {
         );
         this.controls.minZoom = 0.1;
 
-        const gridHelper = new THREE.GridHelper(1000, 100);
-        this.scene.add(gridHelper);
+        // const gridHelper = new THREE.GridHelper(1000, 100);
+        // this.scene.add(gridHelper);
 
         const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
         this.scene.add(ambientLight);
@@ -117,6 +117,14 @@ export class ViewerClient {
             this.elemViewer.clientHeight
         );
         this.render();
+    }
+
+    public setBackgroundColor(color: string): void {
+        this.renderer.setClearColor(color);
+    }
+
+    public setAlpha(alpha: number): void {
+        this.renderer.setClearAlpha(alpha);
     }
 
     public addListener(eventName: string, callable: any): void {
