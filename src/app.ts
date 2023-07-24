@@ -29,7 +29,6 @@ export const run = (api_surface: Promise<Response>) => {
           const mesh = new SurfaceMesh(new Float32Array(vertices), new Uint32Array(faces));
           const colors = new MeshColors(data_json["human_left"], "Viridis", [-1, 2]);
           const surface = new Surface(mesh, colors);
-          const divUi: HTMLElement = getDocElem("viewer-ui");
           const divViewer: HTMLElement = getDocElem("viewer");
           const client = new ViewerClient(divViewer, surface);
           client.setModel(surface.mesh, surface.colors);

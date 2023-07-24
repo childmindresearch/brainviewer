@@ -13,11 +13,11 @@ export type SerializableViewerState = {
 
 export class ViewerClient {
     public controls: CameraControls;
+    public renderer: THREE.WebGLRenderer;
     
     private elemViewer: HTMLElement;
     private scene: THREE.Scene;
     private camera: THREE.PerspectiveCamera;
-    private renderer: THREE.WebGLRenderer;
     private raycaster: THREE.Raycaster;
 
     private surface: Surface;
@@ -57,9 +57,6 @@ export class ViewerClient {
             this.renderer.domElement
         );
         this.controls.minZoom = 0.1;
-
-        // const gridHelper = new THREE.GridHelper(1000, 100);
-        // this.scene.add(gridHelper);
 
         const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
         this.scene.add(ambientLight);
@@ -107,7 +104,7 @@ export class ViewerClient {
         this.renderer.render(this.scene, this.camera);
     }
 
-    private onWindowResize() {
+    public onWindowResize() {
         this.camera.aspect =
             this.elemViewer.clientWidth / this.elemViewer.clientHeight;
         this.camera.updateProjectionMatrix();
@@ -126,22 +123,19 @@ export class ViewerClient {
         this.renderer.setClearAlpha(alpha);
     }
 
-    public setOrbit(orbit: string): void {
-        orbit = orbit.toLowerCase()
-        if (orbit === "origin") {
-            this.controls.setOrbitPoint(0, 0, 0)
-        } else if (orbit === "center") {
-            const vertices = this.surface.mesh.vertices
-            let x = 0, y = 0, z = 0
-            for (let i = 0; i < vertices.length; i += 3) {
-                x += vertices[i] / (vertices.length/3)
-                y += vertices[i+1] / (vertices.length/3)
-                z += vertices[i+2] / (vertices.length/3)
-            }
-            this.controls.setOrbitPoint(x, y, z)
+    public setTarget(targetName: string): undefined {
+        targetName = targetName.toLowerCase()
+        let target: THREE.Vector3
+        if (targetName === "origin") {
+            target = new THREE.Vector3(0, 0, 0)
+        } else if (targetName === "center") {
+            const box = new THREE.Box3().setFromObject(this.scene)
+            target = box.getCenter(new THREE.Vector3())
         } else {
-            console.warn("Unknown orbit point: " + orbit)
+            console.warn("Unknown orbit point: " + targetName)
+            return undefined
         }
+        this.controls.setTarget(target.x, target.y, target.z)
     }
 
     public addListener(eventName: string, callable: any): void {
