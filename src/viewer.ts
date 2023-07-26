@@ -74,13 +74,10 @@ export class ViewerClient {
             this.controls.update(delta);
 
             requestAnimationFrame(animate);
-            const cameraPosition = this.camera.position;
-            const targetPosition  = this.controls.getTarget(new THREE.Vector3());
-
             directionalLight.position.set(
-                cameraPosition.x + (cameraPosition.x - targetPosition.x) * 0.2,
-                cameraPosition.y + (cameraPosition.y - targetPosition.y) * 0.2,
-                cameraPosition.z + (cameraPosition.z - targetPosition.z) * 4.0
+                this.camera.position.x * 1.1,
+                this.camera.position.y * 1.2,
+                this.camera.position.z * 3
             );
 
             this.render();
@@ -132,7 +129,7 @@ export class ViewerClient {
     }
 
     public addListener(eventName: string, callable: any): void {
-        const raycastEvents = ["click", "dblclick", "mousedown", "mouseup"];
+        const raycastEvents = ["click", "dblclick", "mousedown", "mouseup", "touchstart", "touchend"];
         if (!raycastEvents.includes(eventName.toLowerCase())) {
             this.elemViewer.addEventListener(eventName.toLowerCase(), callable, false);
             return;
@@ -141,20 +138,21 @@ export class ViewerClient {
         this.elemViewer.addEventListener(
             eventName.toLowerCase(),
             (event: any) => {
-                const mouse = new THREE.Vector2();
                 const rect = this.elemViewer.getBoundingClientRect();
-                mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
-                mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
+                const mice = getClicks(event, rect);
 
-                this.raycaster.setFromCamera(mouse, this.camera);
-
-                const intersects = this.raycaster.intersectObjects(
-                    this.scene.children.filter(
-                        (child) => child.type === "Mesh"
-                    )
-                );
-                event.intersects = intersects[0];
+                event.intersects = []
+                for (let i = 0; i < mice.length; i++) {
+                    this.raycaster.setFromCamera(mice[i], this.camera);
+                    const intersects = this.raycaster.intersectObjects(
+                        this.scene.children.filter(
+                            (child) => child.type === "Mesh"
+                        )
+                    );
+                    event.intersects.push(intersects[0]);
+                }
                 callable(event)
+                        
             }
         );
     }
@@ -209,4 +207,33 @@ export class ViewerClient {
     public dispose(): void {
         window.removeEventListener("resize", this.onWindowResize);
     }
+}
+
+
+/**
+ * Returns an array of normalized mouse/touch coordinates based on the given event and rectangle.
+ * @param event - The mouse/touch event.
+ * @param rect - The rectangle of the element.
+ * @returns An array of normalized mouse coordinates.
+ */
+function getClicks(event: any, rect: DOMRect) {
+    const clicks: THREE.Vector2[] = [];
+
+    if (event.touches) {
+        for (let i = 0; i < event.touches.length; i++) {
+            const touch = new THREE.Vector2();
+            touch.x = ((event.touches[i].clientX - rect.left) / rect.width) * 2 - 1;
+            touch.y = -((event.touches[i].clientY - rect.top) / rect.height) * 2 + 1;
+            clicks.push(touch);
+        }
+    } 
+
+    if (event.clientX && event.clientY) {
+        const mouse = new THREE.Vector2();
+        mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+        mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
+        clicks.push(mouse);
+    }
+
+    return clicks
 }
