@@ -50,7 +50,6 @@ export class ViewerClient {
         );
         this.elemViewer.appendChild(this.renderer.domElement);
 
-        // eslint-disable-next-line @typescript-eslint/naming-convention
         CameraControls.install({ THREE: THREE });
         this.controls = new CameraControls(
             this.camera,
@@ -64,10 +63,6 @@ export class ViewerClient {
         const directionalLight = new THREE.DirectionalLight(0xffffff, 0.4);
         this.scene.add(directionalLight);
 
-        //const stats = new Stats();
-        //stats.showPanel(0);
-        //this.viewerRoot.appendChild(stats.dom);
-
         const clock = new THREE.Clock();
 
         const animate = () => {
@@ -75,19 +70,15 @@ export class ViewerClient {
                 return;
             }
 
-            //stats.begin();
-
             const delta = clock.getDelta();
-            const hasControlsUpdated = this.controls.update(delta);
-
-            //stats.end();
+            this.controls.update(delta);
 
             requestAnimationFrame(animate);
 
             directionalLight.position.set(
-                this.camera.position.x + 100,
-                this.camera.position.y + 100,
-                this.camera.position.z + 100
+                this.camera.position.x * 1.1,
+                this.camera.position.y * 1.2,
+                this.camera.position.z * 3
             );
 
             this.render();
