@@ -102,12 +102,13 @@ export class Legend {
             )
             .call(
                 d3
-                    .axisBottom(x as any)
+                    .axisBottom(x as unknown as d3.AxisScale<d3.AxisDomain>)
                     //.ticks(ticks, typeof tickFormat === "string" ? tickFormat : undefined)
                     //.tickFormat(typeof tickFormat === "function" ? tickFormat : undefined)
                     .tickSize(this.tickSize)
                 //.tickValues([1, 2, 3])
             )
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             .call(tickAdjust as any)
             .call((g) => g.select(".domain").remove())
             .call((g) =>
@@ -128,7 +129,7 @@ export class Legend {
     public remove() {
         const legendElem: SVGElement = getDocElem(
             "legend"
-        ) as any as SVGElement;
+        ) as unknown as SVGElement;
         legendElem.innerHTML = "";
     }
 
@@ -139,7 +140,7 @@ export class Legend {
     ) {
         const legendElem: SVGElement = getDocElem(
             "legend"
-        ) as any as SVGElement;
+        ) as unknown as SVGElement;
         legendElem.innerHTML = "";
 
         this.color = d3.scaleSequential([minVal, maxVal], colorFun);
