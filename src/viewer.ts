@@ -74,10 +74,14 @@ export class ViewerClient {
             this.controls.update(delta);
 
             requestAnimationFrame(animate);
+
+            const cameraPosition = this.camera.position;
+            const targetPosition = this.controls.getTarget(new THREE.Vector3());
+
             directionalLight.position.set(
-                this.camera.position.x * 1.1,
-                this.camera.position.y * 1.2,
-                this.camera.position.z * 3
+                cameraPosition.x + (cameraPosition.x - targetPosition.x) * 0.2,
+                cameraPosition.y + (cameraPosition.y - targetPosition.y) * 0.2,
+                cameraPosition.z + (cameraPosition.z - targetPosition.z) * 4.0
             );
 
             this.render();
