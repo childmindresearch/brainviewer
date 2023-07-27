@@ -1,4 +1,8 @@
-export function getDocElem<T extends HTMLElement>(id: string) {
+export function getDocElem<T extends HTMLElement>(id: string): T {
+    const elem = document.getElementById(id);
+    if (elem === null) {
+        throw new Error(`Element with id ${id} not found.`);
+    }
     return document.getElementById(id) as T;
 }
 
