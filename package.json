@@ -15,7 +15,8 @@
         "build": "rimraf dist && rollup -c",
         "dev": "concurrently --kill-others --names rollup,web-dev-server \"rimraf dist && rollup -c -w\" \"web-dev-server --app-index index.html --node-resolve --open --watch\"",
         "tests": "echo \"Error: no test specified\" && exit 1",
-        "lint": "eslint src --ext ts"
+        "lint": "eslint src --ext ts",
+        "test": "echo \"Warning: no tests implemented yet. This script is implemented to satisfy the npm test command.\" && exit 0"
     },
     "devDependencies": {
         "@rollup/plugin-node-resolve": "^15.1.0",
