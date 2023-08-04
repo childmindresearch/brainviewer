@@ -7,12 +7,11 @@
   import { minMax } from "brainviewer/src/utils";
   import { ViewerClient } from "brainviewer/src/viewer";
   import { spectrogram } from "./spectrogram";
-  import { afterUpdate, onMount } from "svelte";
+  import { onMount } from "svelte";
   import brainData from "../assets/brain.json";
   import intensityData from "../assets/intensity.json";
 
-  let elemViewer;
-  let viewer;
+  let elemViewer: HTMLElement;
 
   let client: ViewerClient | undefined;
 
@@ -105,8 +104,8 @@
 
     const surface = new Surface(surfaceMesh, colors);
 
-    client = new ViewerClient(elemViewer, surface);
-    client.setModel(surface.mesh, surface.colors);
+    client = new ViewerClient(elemViewer);
+    client.addModel(surface);
     client.setTarget("center");
   });
 </script>
