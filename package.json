@@ -18,6 +18,12 @@
     "lint": "eslint src --ext ts",
     "test": "jest"
   },
+  "dependencies": {
+    "camera-controls": "^2.7.0",
+    "d3": "^7.8.5",
+    "d3-scale-chromatic": "^3.0.0",
+    "three": "0.150.0"
+  },
   "devDependencies": {
     "@babel/preset-env": "^7.22.9",
     "@babel/register": "^7.22.5",
@@ -32,16 +38,13 @@
     "@typescript-eslint/parser": "^6.2.0",
     "@web/dev-server": "^0.3.0",
     "babel-jest": "^29.6.2",
-    "camera-controls": "^2.7.0",
     "concurrently": "^8.2.0",
-    "d3": "^7.8.5",
     "deepmerge": "^4.3.1",
     "eslint": "^8.45.0",
     "jest": "^29.6.2",
     "jest-environment-jsdom": "^29.6.2",
     "rimraf": "^5.0.1",
     "rollup": "^3.26.3",
-    "three": "0.150.0",
     "ts-jest": "^29.1.1",
     "typescript": "^5.1.6"
   }
