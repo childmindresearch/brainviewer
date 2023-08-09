@@ -18,6 +18,12 @@
         "lint": "eslint src --ext ts",
         "test": "echo \"Warning: no tests implemented yet. This script is implemented to satisfy the npm test command.\" && exit 0"
     },
+    "dependencies": {
+        "camera-controls": "^2.7.0",
+        "d3": "^7.8.5",
+        "d3-scale-chromatic": "^3.0.0",
+        "three": "0.150.0"
+    },
     "devDependencies": {
         "@rollup/plugin-node-resolve": "^15.1.0",
         "@rollup/plugin-terser": "^0.4.3",
@@ -28,14 +34,10 @@
         "@typescript-eslint/eslint-plugin": "^6.2.0",
         "@typescript-eslint/parser": "^6.2.0",
         "@web/dev-server": "^0.3.0",
-        "camera-controls": "^2.7.0",
         "concurrently": "^8.2.0",
-        "d3": "^7.8.5",
-        "deepmerge": "^4.3.1",
         "eslint": "^8.45.0",
         "rimraf": "^5.0.1",
         "rollup": "^3.26.3",
-        "three": "0.150.0",
         "typescript": "^5.1.6"
     }
 }
