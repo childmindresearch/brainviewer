@@ -2,7 +2,7 @@ import * as THREE from "three";
 import CameraControls from "camera-controls";
 import { Legend } from "./colormaps/legend";
 import { Surface } from "./brainViewer";
-import { isMeshEqual, surfaceToMesh } from "./utils";
+import { surfaceToMesh } from "./utils";
 
 export type SerializableViewerState = {
   map?: number[];
@@ -163,9 +163,10 @@ export class ViewerClient {
     );
   }
 
-  public addModel(surface: Surface): void {
+  public addModel(surface: Surface): THREE.Mesh {
     const obj = surfaceToMesh(surface);
     this.scene.add(obj);
+    return obj;
   }
 
   public getModels(): THREE.Mesh[] {
@@ -174,15 +175,8 @@ export class ViewerClient {
     ) as THREE.Mesh[];
   }
 
-  public deleteModel(surface: Surface): void {
-    const models = this.getModels();
-    const surface_mesh = surfaceToMesh(surface);
-
-    models.map((model) => {
-      if (isMeshEqual(model, surface_mesh)) {
-        this.scene.remove(model);
-      }
-    });
+  public deleteModel(surface: THREE.Mesh): void {
+    this.scene.remove(surface);
   }
 
   public dispose(): void {
