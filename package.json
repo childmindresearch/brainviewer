@@ -3,6 +3,11 @@
     "displayName": "brainviewer",
     "description": "Brain viewer",
     "version": "0.0.2",
+    "private": false,
+    "publishConfig": {
+        "access": "public",
+        "registry": "https://registry.npmjs.org/"
+    },
     "repository": {
         "type": "git",
         "url": "https://github.com/cmi-dair/brainviewer.git"
