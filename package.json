@@ -2,7 +2,7 @@
     "name": "@cmi-dair/brainviewer",
     "displayName": "brainviewer",
     "description": "Brain viewer",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "repository": {
         "type": "git",
         "url": "https://github.com/cmi-dair/brainviewer.git"
