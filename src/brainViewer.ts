@@ -1,5 +1,5 @@
-import { computeMapColors } from "./colormaps/colormapUtils";
-import { ColorInterpolateName } from "./colormaps/d3ColorSchemes";
+import { computeMapColors } from "./colormaps/colormapUtils.js";
+import { ColorInterpolateName } from "./colormaps/d3ColorSchemes.js";
 
 export class SurfaceMesh {
     public readonly vertices: Float32Array;

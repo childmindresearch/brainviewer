@@ -1,5 +1,5 @@
 import * as THREE from "three";
-import { Surface } from "./brainViewer";
+import { Surface } from "./brainViewer.js";
 
 export function getDocElem<T extends HTMLElement>(id: string): T {
   const elem = document.getElementById(id);
@@ -24,13 +24,14 @@ export function minMax(
     return undefined;
   }
   let max = arr[0];
-  let min = arr[0];
+  let min = max;
   for (let i = 0; i < arr.length; i++) {
-    if (max < arr[i]) {
-      max = arr[i];
+    const arrI = arr[i];
+    if (max < arrI) {
+      max = arrI;
     }
-    if (min > arr[i]) {
-      min = arr[i];
+    if (min > arrI) {
+      min = arrI;
     }
   }
   return [min, max];

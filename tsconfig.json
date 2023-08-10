@@ -1,20 +1,36 @@
 {
+    "$schema": "https://json.schemastore.org/tsconfig",
     "compilerOptions": {
-        "target": "es2018",
-        "module": "esnext",
-        "moduleResolution": "node",
-        "noEmitOnError": true,
+        "incremental": true,
         "lib": [
-            "ES2020",
-            "DOM"
+            "es2022"
         ],
+        "module": "ES2022",
+        "moduleResolution": "node",
+        "target": "es2022",
+        "allowSyntheticDefaultImports": true,
+        "outDir": "lib",
+        "declaration": true,
+        "noEmit": false,
         "strict": true,
+        "noImplicitAny": true,
+        "strictNullChecks": true,
+        "strictFunctionTypes": true,
+        "strictBindCallApply": true,
+        "strictPropertyInitialization": true,
+        "noImplicitThis": true,
+        "alwaysStrict": true,
+        "noUnusedLocals": true,
+        "noUnusedParameters": true,
+        "noImplicitReturns": true,
+        "noFallthroughCasesInSwitch": true,
+        "noImplicitOverride": true,
+        "noPropertyAccessFromIndexSignature": true,
         "esModuleInterop": true,
-        "outDir": "out-tsc",
-        "rootDir": "./",
-        "allowSyntheticDefaultImports": true
+        "forceConsistentCasingInFileNames": true,
+        "skipLibCheck": true
     },
     "include": [
-        "./src/**/*.ts"
+        "src/**/*"
     ]
 }
