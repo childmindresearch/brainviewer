@@ -2,7 +2,7 @@
   "name": "@cmi-dair/brainviewer",
   "displayName": "brainviewer",
   "description": "Brain viewer",
-  "version": "0.0.2",
+  "version": "0.1.0",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "files": [
@@ -28,7 +28,7 @@
     "build": "npx tsc",
     "tests": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint src --ext ts",
-    "test": "jest"
+    "test": "npx jest"
   },
   "dependencies": {
     "camera-controls": "^2.7.0",
@@ -37,6 +37,9 @@
     "three": "0.150.0"
   },
   "devDependencies": {
+    "@babel/preset-env": "^7.22.9",
+    "@babel/preset-typescript": "^7.22.5",
+    "@babel/register": "^7.22.5",
     "@types/d3": "^7.4.0",
     "@types/d3-scale-chromatic": "^3.0.0",
     "@types/jest": "^29.5.3",
