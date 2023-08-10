@@ -195,9 +195,10 @@ function getClicks(event: MouseEvent | TouchEvent, rect: DOMRect) {
 
   if (event instanceof TouchEvent) {
     for (let i = 0; i < event.touches.length; i++) {
+      const eventTouch = event.touches[i];
       const touch = new THREE.Vector2();
-      touch.x = ((event.touches[i].clientX - rect.left) / rect.width) * 2 - 1;
-      touch.y = -((event.touches[i].clientY - rect.top) / rect.height) * 2 + 1;
+      touch.x = ((eventTouch.clientX - rect.left) / rect.width) * 2 - 1;
+      touch.y = -((eventTouch.clientY - rect.top) / rect.height) * 2 + 1;
       clicks.push(touch);
     }
   }
