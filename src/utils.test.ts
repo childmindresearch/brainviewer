@@ -1,7 +1,7 @@
 import * as THREE from "three";
-import { getDocElem, createDocElem, minMax, surfaceToMesh } from "./utils";
+import { getDocElem, createDocElem, minMax, surfaceToMesh } from "./utils.js";
 jest.mock("./brainViewer");
-import { Surface } from "./brainViewer";
+import { Surface } from "./brainViewer.js";
 
 describe("getDocElem", () => {
   it("should return an HTML element when the element with the given id exists", () => {

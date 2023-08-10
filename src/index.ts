@@ -1,8 +1,9 @@
 import * as THREE from "three";
 import CameraControls from "camera-controls";
-import { Legend } from "./colormaps/legend";
-import { Surface } from "./brainViewer";
-import { surfaceToMesh } from "./utils";
+import { Legend } from "./colormaps/legend.js";
+import { Surface } from "./brainViewer.js";
+import { surfaceToMesh } from "./utils.js";
+
 
 export type SerializableViewerState = {
   map?: number[];

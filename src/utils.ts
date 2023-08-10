@@ -1,5 +1,5 @@
 import * as THREE from "three";
-import { Surface } from "./brainViewer";
+import { Surface } from "./brainViewer.js";
 
 export function getDocElem<T extends HTMLElement>(id: string): T {
   const elem = document.getElementById(id);

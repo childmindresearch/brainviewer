@@ -1,5 +1,5 @@
 import * as d3 from "d3";
-import { getDocElem } from "../utils";
+import { getDocElem } from "../utils.js";
 
 export class Legend {
     public color = d3.scaleSequential([20, 25], d3.interpolateViridis);

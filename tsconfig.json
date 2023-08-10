@@ -5,8 +5,10 @@
         "lib": [
             "es2022"
         ],
-        "module": "commonjs",
+        "module": "ES2022",
+        "moduleResolution": "node",
         "target": "es2022",
+        "allowSyntheticDefaultImports": true,
         "outDir": "lib",
         "declaration": true,
         "noEmit": false,
