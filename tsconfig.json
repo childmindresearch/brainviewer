@@ -1,20 +1,15 @@
 {
-    "compilerOptions": {
-        "target": "es2018",
-        "module": "esnext",
-        "moduleResolution": "node",
-        "noEmitOnError": true,
-        "lib": [
-            "ES2020",
-            "DOM"
-        ],
-        "strict": true,
-        "esModuleInterop": true,
-        "outDir": "out-tsc",
-        "rootDir": "./",
-        "allowSyntheticDefaultImports": true
-    },
-    "include": [
-        "./src/**/*.ts"
-    ]
+  "compilerOptions": {
+    "target": "es2018",
+    "module": "esnext",
+    "moduleResolution": "node",
+    "noEmitOnError": true,
+    "lib": ["ES2020", "DOM"],
+    "strict": true,
+    "esModuleInterop": true,
+    "outDir": "out-tsc",
+    "rootDir": "./",
+    "allowSyntheticDefaultImports": true
+  },
+  "include": ["./src/**/*.ts"]
 }

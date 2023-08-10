@@ -1,43 +1,45 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-        content="width=device-width, shrink-to-fit=0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, shrink-to-fit=0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
+    />
     <title>BrainViewer</title>
 
     <style>
-        html {
-            height: 100%;
-        }
+      html {
+        height: 100%;
+      }
 
-        body {
-            height: 100%;
-            padding: 0;
-        }
+      body {
+        height: 100%;
+        padding: 0;
+      }
 
-        #legend {
-            position: absolute;
-            top: 80px;
-            left: 20px;
-        }
+      #legend {
+        position: absolute;
+        top: 80px;
+        left: 20px;
+      }
     </style>
-</head>
+  </head>
 
-<body>
+  <body>
     <div id="viewer-ui"></div>
     <div id="viewer"></div>
     <div id="legend"></div>
 
     <script type="module">
-        import { run } from '../dist/bundle.js';
+      import { run } from "../dist/bundle.js";
 
-        const api_surface = fetch("http://localhost:8000/surfaces/hemispheres?species=human&side=left")
-        window.onload = () => {
-            run(api_surface)
-        }
+      const api_surface = fetch(
+        "http://localhost:8000/surfaces/hemispheres?species=human&side=left",
+      );
+      window.onload = () => {
+        run(api_surface);
+      };
     </script>
-</body>
-
+  </body>
 </html>
