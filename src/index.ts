@@ -4,7 +4,6 @@ import { Legend } from "./colormaps/legend.js";
 import { Surface } from "./brainViewer.js";
 import { surfaceToMesh } from "./utils.js";
 
-
 export type SerializableViewerState = {
   map?: number[];
   mesh?: {
