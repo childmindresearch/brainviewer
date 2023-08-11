@@ -1,4 +1,4 @@
-name: npm run test
+name: Generate Documentation
 
 on:
   push:
