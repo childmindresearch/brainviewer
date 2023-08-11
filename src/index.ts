@@ -3,6 +3,7 @@ import CameraControls from "camera-controls";
 import { Legend } from "./colormaps/legend";
 import { Surface } from "./surfaceModels";
 import { surfaceToMesh } from "./utils";
+import { ColorInterpolateName, colorInterpolates } from "./colormaps/d3ColorSchemes";
 
 export type SerializableViewerState = {
   map?: number[];
@@ -21,11 +22,12 @@ export class ViewerClient {
   private camera: THREE.PerspectiveCamera;
   private raycaster: THREE.Raycaster;
 
-  private legend: Legend;
+  private legend?: Legend;
 
-  public constructor(elemViewer: HTMLElement) {
-    this.legend = new Legend();
-    this.legend.init();
+  public constructor(elemViewer: HTMLElement, elemLegend?: HTMLElement) {
+    if (elemLegend) {
+      this.legend = new Legend(elemLegend);
+    }
 
     this.elemViewer = elemViewer;
 
@@ -177,6 +179,18 @@ export class ViewerClient {
 
   public deleteModel(surface: THREE.Mesh): void {
     this.scene.remove(surface);
+  }
+
+  public updateLegend(
+    colorMapName: ColorInterpolateName,
+    colorLimits: [number, number],
+    title?: string,
+  ): void {
+
+    if (!this.legend) {
+      return;
+    }
+    this.legend.update(colorLimits[0], colorLimits[1], colorInterpolates[colorMapName], title);
   }
 
   public dispose(): void {

@@ -26,7 +26,6 @@
   },
   "scripts": {
     "build": "npx tsc",
-    "tests": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint src --ext ts",
     "test": "npx jest"
   },

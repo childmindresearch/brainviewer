@@ -1,7 +1,27 @@
 import * as d3 from "d3";
-import { getDocElem } from "../utils";
+
+
+function ramp(
+  color: d3.ScaleSequential<string, never>,
+  n = 256,
+): HTMLCanvasElement {
+  const canvas = document.createElement("canvas");
+  canvas.width = n;
+  canvas.height = 1;
+  const context = canvas.getContext("2d");
+  if (!context) {
+    return canvas;
+  }
+  for (let i = 0; i < n; ++i) {
+    context.fillStyle = color(i / (n - 1));
+    context.fillRect(i, 0, 1, 1);
+  }
+  return canvas;
+}
 
 export class Legend {
+  private elem: HTMLElement;
+
   public color = d3.scaleSequential([20, 25], d3.interpolateViridis);
   public tickSize = 16;
   public width = 320;
@@ -16,30 +36,18 @@ export class Legend {
   public tickValues = undefined;
   public title: string = "Intensity";
 
-  public init() {
-    function ramp(
-      color: d3.ScaleSequential<string, never>,
-      n = 256,
-    ): HTMLCanvasElement {
-      const canvas = document.createElement("canvas");
-      canvas.width = n;
-      canvas.height = 1;
-      const context = canvas.getContext("2d");
-      if (!context) {
-        return canvas;
-      }
-      for (let i = 0; i < n; ++i) {
-        context.fillStyle = color(i / (n - 1));
-        context.fillRect(i, 0, 1, 1);
-      }
-      return canvas;
-    }
+  constructor(elem: HTMLElement) {
+    this.elem = elem;
+  }
 
-    // clear all
-    //d3.select("svg").selectAll("*").remove();
+  private init() {
+    // create legend
+    this.elem.innerHTML = "";
+    const svgElem = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+    this.elem.appendChild(svgElem);
 
     const svg = d3
-      .select("svg#legend")
+      .select(svgElem)
       .attr("width", this.width)
       .attr("height", this.height)
       .attr("viewBox", [0, 0, this.width, this.height])
@@ -116,22 +124,16 @@ export class Legend {
   }
 
   public remove() {
-    const legendElem: SVGElement = getDocElem(
-      "legend",
-    ) as unknown as SVGElement;
-    legendElem.innerHTML = "";
+    this.elem.innerHTML = "";
   }
 
   public update(
     minVal: number,
     maxVal: number,
     colorFun: (t: number) => string,
+    title: string = "Intensity",
   ) {
-    const legendElem: SVGElement = getDocElem(
-      "legend",
-    ) as unknown as SVGElement;
-    legendElem.innerHTML = "";
-
+    this.title = title;
     this.color = d3.scaleSequential([minVal, maxVal], colorFun);
     this.init();
   }
