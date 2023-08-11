@@ -1,4 +1,4 @@
-import { ColorInterpolateName, colorInterpolates } from "./d3ColorSchemes.js";
+import { ColorInterpolateName, colorInterpolates } from "./d3ColorSchemes";
 
 function makeInterpolationFun(
   name: ColorInterpolateName,
