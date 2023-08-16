@@ -1,12 +1,4 @@
-// d3 seems to have issues in Jest, just mock it.
-jest.mock("./colormaps/d3ColorSchemes", () => ({
-  ColorInterpolateName: {
-    Blues: "Blues",
-  },
-  colorInterpolates: {
-    Blues: () => "#0000FF",
-  },
-}));
+import { describe, test, expect } from 'vitest'
 
 import { SurfaceMesh, MeshColors, Surface } from "./surfaceModels";
 
@@ -27,11 +19,11 @@ describe("MeshColors", () => {
     const intensity = [1, 0];
     const colorMapName = "Blues";
     const colorLimits: [number, number] = [0, 1];
-    const expected = new Float32Array([0, 0, 1, 0, 0, 1]);
 
     const meshColors = new MeshColors(intensity, colorMapName, colorLimits);
 
-    expect(meshColors.colors).toEqual(expected);
+    // More blue for higher intensity
+    expect(meshColors.colors[2]).toBeLessThan(meshColors.colors[5]);
   });
 });
 
