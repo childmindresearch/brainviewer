@@ -15,10 +15,10 @@ describe("index.ts", () => {
     "colorMaps",
     "colorInterpolates",
     "Legend",
-  ];
+  ].sort();
 
   it("should export the expected exports", () => {
-    const actualExports = Object.keys(indexExports);
+    const actualExports = Object.keys(indexExports).sort();
 
     expect(actualExports).toEqual(expectedExports);
   });
