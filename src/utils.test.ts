@@ -48,9 +48,20 @@ describe("minMax", () => {
 });
 
 describe("surfaceToMesh", () => {
-  it("should convert a Surface object to a THREE.Mesh object", () => {
+  it("should convert a Surface object with meshcolors to a THREE.Mesh object", () => {
     // @ts-expect-error because Surface is mocked.
     const surface = new Surface();
+
+    const mesh = surfaceToMesh(surface);
+
+    expect(mesh).toBeDefined();
+    expect(mesh instanceof THREE.Mesh).toBe(true);
+  });
+
+  it("should convert a Surface object without meshcolors to a THREE.Mesh object", () => {
+    // @ts-expect-error because Surface is mocked.
+    const surface = new Surface();
+    surface.colors = undefined;
 
     const mesh = surfaceToMesh(surface);
 
