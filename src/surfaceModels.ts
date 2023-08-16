@@ -26,9 +26,9 @@ export class MeshColors {
 
 export class Surface {
   public mesh: SurfaceMesh;
-  public colors: MeshColors | undefined;
+  public colors?: MeshColors;
 
-  constructor(mesh: SurfaceMesh, colors: MeshColors | undefined = undefined) {
+  constructor(mesh: SurfaceMesh, colors?: MeshColors) {
     this.mesh = mesh;
     this.colors = colors;
   }
