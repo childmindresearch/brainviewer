@@ -52,9 +52,11 @@ export function surfaceToMesh(surface: Surface): THREE.Mesh {
   geometry.computeVertexNormals();
 
   let material: THREE.MeshLambertMaterial;
-  const colors = surface.colors.colors;
-  if (colors) {
-    geometry.setAttribute("color", new THREE.BufferAttribute(colors, 3));
+  if (surface.colors) {
+    geometry.setAttribute(
+      "color",
+      new THREE.BufferAttribute(surface.colors.colors, 3),
+    );
     material = new THREE.MeshLambertMaterial({
       vertexColors: true,
     });
