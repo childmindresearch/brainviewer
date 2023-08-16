@@ -1,12 +1,7 @@
 import * as THREE from "three";
 import CameraControls from "camera-controls";
-import { Legend } from "./colormaps/legend";
 import { Surface } from "./surfaceModels";
 import { surfaceToMesh } from "./utils";
-import {
-  ColorInterpolateName,
-  colorInterpolates,
-} from "./colormaps/d3ColorSchemes";
 
 export type SerializableViewerState = {
   map?: number[];
@@ -20,19 +15,13 @@ export class ViewerClient {
   public controls: CameraControls;
   public renderer: THREE.WebGLRenderer;
 
-  private elemViewer: HTMLElement;
+  private elem: HTMLElement;
   private scene: THREE.Scene;
   private camera: THREE.PerspectiveCamera;
   private raycaster: THREE.Raycaster;
 
-  private legend?: Legend;
-
-  public constructor(elemViewer: HTMLElement, elemLegend?: HTMLElement) {
-    if (elemLegend) {
-      this.legend = new Legend(elemLegend);
-    }
-
-    this.elemViewer = elemViewer;
+  public constructor(elem: HTMLElement) {
+    this.elem = elem;
 
     this.scene = new THREE.Scene();
     this.camera = new THREE.PerspectiveCamera(
@@ -46,12 +35,12 @@ export class ViewerClient {
     this.raycaster = new THREE.Raycaster();
 
     this.renderer = new THREE.WebGLRenderer();
-    this.elemViewer.innerHTML = "";
+    this.elem.innerHTML = "";
     this.renderer.setSize(
-      this.elemViewer.clientWidth,
-      this.elemViewer.clientHeight,
+      this.elem.clientWidth,
+      this.elem.clientHeight,
     );
-    this.elemViewer.appendChild(this.renderer.domElement);
+    this.elem.appendChild(this.renderer.domElement);
 
     CameraControls.install({ THREE: THREE });
     this.controls = new CameraControls(this.camera, this.renderer.domElement);
@@ -97,11 +86,11 @@ export class ViewerClient {
 
   public onWindowResize() {
     this.camera.aspect =
-      this.elemViewer.clientWidth / this.elemViewer.clientHeight;
+      this.elem.clientWidth / this.elem.clientHeight;
     this.camera.updateProjectionMatrix();
     this.renderer.setSize(
-      this.elemViewer.clientWidth,
-      this.elemViewer.clientHeight,
+      this.elem.clientWidth,
+      this.elem.clientHeight,
     );
     this.render();
   }
@@ -147,14 +136,14 @@ export class ViewerClient {
     const eventNameLower: string = eventName.toLowerCase();
 
     if (!(raycastEvents as unknown as string[]).includes(eventNameLower)) {
-      this.elemViewer.addEventListener(eventNameLower, callable, false);
+      this.elem.addEventListener(eventNameLower, callable, false);
       return;
     }
 
-    this.elemViewer.addEventListener(
+    this.elem.addEventListener(
       eventNameLower as (typeof raycastEvents)[number],
       (event: MouseEvent | TouchEvent) => {
-        const rect = this.elemViewer.getBoundingClientRect();
+        const rect = this.elem.getBoundingClientRect();
         const mice = getClicks(event, rect);
 
         const intersects = [];
@@ -182,22 +171,6 @@ export class ViewerClient {
 
   public deleteModel(surface: THREE.Mesh): void {
     this.scene.remove(surface);
-  }
-
-  public updateLegend(
-    colorMapName: ColorInterpolateName,
-    colorLimits: [number, number],
-    title?: string,
-  ): void {
-    if (!this.legend) {
-      return;
-    }
-    this.legend.update(
-      colorLimits[0],
-      colorLimits[1],
-      colorInterpolates[colorMapName],
-      title,
-    );
   }
 
   public dispose(): void {

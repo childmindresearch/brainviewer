@@ -1,6 +1,9 @@
 import * as d3 from "d3";
 
 
+/**
+ * Create a canvas element with a color gradient based on a D3 scale.
+ */
 function ramp(
   color: d3.ScaleSequential<string, never>,
   n = 256,
@@ -19,6 +22,9 @@ function ramp(
   return canvas;
 }
 
+/**
+ * HTML legend for use with the Brain Viewer.
+ */
 export class Legend {
   private elem: HTMLElement;
 
@@ -36,6 +42,12 @@ export class Legend {
   public tickValues = undefined;
   public title: string = "Intensity";
 
+  /**
+   * Create a new legend.
+   * Call `update(...)` to initialize or update the DOM after.
+   * 
+   * @param elem DOM element to attach legend to.
+   */
   constructor(elem: HTMLElement) {
     this.elem = elem;
   }
@@ -123,10 +135,21 @@ export class Legend {
       );
   }
 
-  public remove() {
+  /**
+   * Remove legend from DOM.
+   */
+  public dispose() {
     this.elem.innerHTML = "";
   }
 
+  /**
+   * Update legend with new color scale.
+   * 
+   * @param minVal Scale minimum.
+   * @param maxVal Scale maximum.
+   * @param colorFun Color scale. Can be `colorInterpolates[name]`.
+   * @param title Legend title.
+   */
   public update(
     minVal: number,
     maxVal: number,
