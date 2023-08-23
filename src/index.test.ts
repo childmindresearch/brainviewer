@@ -1,9 +1,6 @@
 import * as indexExports from "./index";
 
-// d3 seems to have issues in Jest.
-// We don't need it for these tests, so just mock it.
-jest.mock("d3", () => jest.fn());
-jest.mock("d3-scale-chromatic", () => jest.fn());
+import { describe, it, expect } from 'vitest'
 
 describe("index.ts", () => {
   const expectedExports = [

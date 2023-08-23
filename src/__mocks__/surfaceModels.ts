@@ -13,10 +13,8 @@ export class Surface {
   public colors: { colors: Float32Array };
 
   constructor(
-    mesh:
-      | { vertices: Float32Array; faces: Uint32Array }
-      | undefined = undefined,
-    colors: { colors: Float32Array } | undefined = undefined,
+    mesh?: { vertices: Float32Array; faces: Uint32Array },
+    colors?: { colors: Float32Array },
   ) {
     this.mesh = mesh || mockSurfaceData.mesh;
     this.colors = colors || mockSurfaceData.colors;
