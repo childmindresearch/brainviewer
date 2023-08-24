@@ -1,4 +1,28 @@
 import * as d3 from "d3";
+import { colorInterpolates } from "./d3ColorSchemes"
+
+
+interface LegendSettings {
+  /**
+   * Color bar settings.
+   * Default: {minVal: -1, maxVal: 1, colorFun: colorInterpolates["Viridis"]}
+   */
+  colorBar: {
+    minVal: number,
+    maxVal: number,
+    colorFun: (t: number) => string,
+  }
+  /**
+   * Title of the legend.
+   * Default: "Intensity"
+   */
+  title: string,
+  /**
+   * Background color of the legend. (SVG attribute colors '#rrggbbaa')
+   * Default: "#00000088"
+   */
+  backgroundColor: string,
+}
 
 
 /**
@@ -28,19 +52,21 @@ function ramp(
 export class Legend {
   private elem: HTMLElement;
 
-  public color = d3.scaleSequential([20, 25], d3.interpolateViridis);
-  public tickSize = 16;
-  public width = 320;
-  public height = 44 + this.tickSize;
+  private color = d3.scaleSequential([-1, 1], colorInterpolates["Viridis"]);
+  private tickSize = 16;
+  private width = 320;
+  private height = 44 + this.tickSize;
 
-  public marginTop = 18;
-  public marginBottom = 16 + this.tickSize;
-  public marginLeft = 0;
-  public marginRight = 0;
-  public ticks = this.width / 64;
-  public tickFormat = undefined;
-  public tickValues = undefined;
-  public title: string = "Intensity";
+  private marginTop = 18;
+  private marginBottom = 16 + this.tickSize;
+  private marginLeft = 0;
+  private marginRight = 0;
+  //private ticks = this.width / 64;
+  //private tickFormat = undefined;
+  //private tickValues = undefined;
+  private title: string = "Intensity";
+
+  private backgroundColor: string = "#00000088";
 
   /**
    * Create a new legend.
@@ -48,8 +74,11 @@ export class Legend {
    * 
    * @param elem DOM element to attach legend to.
    */
-  constructor(elem: HTMLElement) {
+  constructor(elem: HTMLElement, settings?: Partial<LegendSettings>) {
     this.elem = elem;
+    if (settings) {
+      this.update(settings);
+    }
   }
 
   private init() {
@@ -91,7 +120,7 @@ export class Legend {
       .attr("y", 0)
       .attr("width", this.width + 24)
       .attr("height", this.height)
-      .attr("fill", "#00000088");
+      .attr("fill", this.backgroundColor);
 
     // color bar
     svg
@@ -143,21 +172,30 @@ export class Legend {
   }
 
   /**
-   * Update legend with new color scale.
+   * Apply settings to legend.
+   *
+   * @param settings Legend settings.
+   */
+  private applySettings(settings: Partial<LegendSettings>): void {
+    this.title = settings?.title ?? this.title;
+    this.backgroundColor = settings?.backgroundColor ?? this.backgroundColor;
+    if (settings.colorBar) {
+      this.color = d3.scaleSequential(
+        [settings.colorBar.minVal, settings.colorBar.maxVal],
+        settings.colorBar.colorFun
+      );
+    }
+  }
+
+  /**
+   * Update legend with new settings.
    * 
-   * @param minVal Scale minimum.
-   * @param maxVal Scale maximum.
-   * @param colorFun Color scale. Can be `colorInterpolates[name]`.
-   * @param title Legend title.
+   * @param settings Legend settings.
    */
   public update(
-    minVal: number,
-    maxVal: number,
-    colorFun: (t: number) => string,
-    title: string = "Intensity",
+    settings: Partial<LegendSettings>,
   ) {
-    this.title = title;
-    this.color = d3.scaleSequential([minVal, maxVal], colorFun);
+    this.applySettings(settings);
     this.init();
   }
 }
