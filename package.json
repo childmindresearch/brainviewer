@@ -2,7 +2,7 @@
   "name": "@cmi-dair/brainviewer",
   "displayName": "brainviewer",
   "description": "Brain viewer",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "main": "./dist/brainviewer.umd.cjs",
   "module": "./dist/brainviewer.js",
   "types": "./dist/index.d.ts",
