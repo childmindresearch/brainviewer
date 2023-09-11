@@ -14,18 +14,16 @@ describe("SurfaceMesh", () => {
   });
 });
 
-describe("MeshColors", () => {
-  test("creates a MeshColors instance with interpolated colors", () => {
+describe("VertexMap", () => {
+  test("creates a VertexMap instance with interpolated colors", () => {
     const intensity = [1, 0];
     const colorMapName = "Blues";
     const colorLimits: [number, number] = [0, 1];
 
-    const meshColors = new VertexMap(intensity, colorMapName, colorLimits);
+    const vertexMap = new VertexMap(intensity, colorMapName, colorLimits);
 
     // More blue for higher intensity
-    expect(meshColors.get("colors")[2]).toBeLessThan(
-      meshColors.get("colors")[5],
-    );
+    expect(vertexMap.get("colors")[2]).toBeLessThan(vertexMap.get("colors")[5]);
   });
 });
 
@@ -37,12 +35,13 @@ describe("Surface", () => {
     const intensity = [0.1, 0.9];
     const colorMapName = "Blues";
     const colorLimits: [number, number] = [0, 1];
-    const meshColors = new VertexMap(intensity, colorMapName, colorLimits);
+    const vertexMap = new VertexMap(intensity, colorMapName, colorLimits);
+    const expected_colors = vertexMap.get("colors");
 
     const surface = new Surface(vertices, faces);
-    surface.addVertexMap(intensity, colorLimits, colorMapName);
+    surface.addVertexMap(intensity, colorMapName, colorLimits);
 
-    expect(surface.mesh).toEqual(surfaceMesh);
-    expect(surface.vertexMap[0].get("colors")).toEqual(meshColors);
+    expect(surface.mesh[0]).toEqual(surfaceMesh);
+    expect(surface.vertexMap[0].get("colors")).toEqual(expected_colors);
   });
 });

@@ -107,10 +107,10 @@ export class Surface {
 
   public addVertexMap(
     intensity: number[],
-    colorLimits?: [number, number],
     colorMapName?: ColorInterpolateName,
+    colorLimits?: [number, number],
   ) {
-    this.vertexMap.push(new VertexMap(intensity, colorLimits, colorMapName));
+    this.vertexMap.push(new VertexMap(intensity, colorMapName, colorLimits));
   }
 
   public deleteVertexMap(index: number) {

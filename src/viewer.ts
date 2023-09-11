@@ -1,6 +1,6 @@
-import * as THREE from "three";
 import CameraControls from "camera-controls";
-import { Surface } from "./surfaceModels";
+import * as THREE from "three";
+import { Surface, VertexMap } from "./models";
 import { surfaceToMesh } from "./utils";
 
 export type SerializableViewerState = {
@@ -20,6 +20,8 @@ export class ViewerClient {
   private camera: THREE.PerspectiveCamera;
   private raycaster: THREE.Raycaster;
 
+  private vertexMaps: VertexMap[] = [];
+
   public constructor(elem: HTMLElement) {
     this.elem = elem;
 
@@ -36,10 +38,7 @@ export class ViewerClient {
 
     this.renderer = new THREE.WebGLRenderer();
     this.elem.innerHTML = "";
-    this.renderer.setSize(
-      this.elem.clientWidth,
-      this.elem.clientHeight,
-    );
+    this.renderer.setSize(this.elem.clientWidth, this.elem.clientHeight);
     this.elem.appendChild(this.renderer.domElement);
 
     CameraControls.install({ THREE: THREE });
@@ -85,13 +84,9 @@ export class ViewerClient {
   }
 
   public onWindowResize() {
-    this.camera.aspect =
-      this.elem.clientWidth / this.elem.clientHeight;
+    this.camera.aspect = this.elem.clientWidth / this.elem.clientHeight;
     this.camera.updateProjectionMatrix();
-    this.renderer.setSize(
-      this.elem.clientWidth,
-      this.elem.clientHeight,
-    );
+    this.renderer.setSize(this.elem.clientWidth, this.elem.clientHeight);
     this.render();
   }
 
@@ -157,10 +152,14 @@ export class ViewerClient {
     );
   }
 
-  public addModel(surface: Surface): THREE.Mesh {
+  public addSurface(surface: Surface): THREE.Mesh {
     const obj = surfaceToMesh(surface);
     this.scene.add(obj);
     return obj;
+  }
+
+  public addVertexMap(vertexMap: VertexMap): void {
+    this.vertexMaps.push(vertexMap);
   }
 
   public getModels(): THREE.Mesh[] {
