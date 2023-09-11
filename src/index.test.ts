@@ -1,11 +1,11 @@
 import * as indexExports from "./index";
 
-import { describe, it, expect } from 'vitest'
+import { describe, expect, it } from "vitest";
 
 describe("index.ts", () => {
   const expectedExports = [
     "SurfaceMesh",
-    "MeshColors",
+    "VertexMap",
     "Surface",
     "minMax",
     "ViewerClient",

@@ -1,6 +1,6 @@
-import { describe, test, expect } from 'vitest'
+import { describe, expect, test } from "vitest";
 
-import { SurfaceMesh, MeshColors, Surface } from "./surfaceModels";
+import { Surface, SurfaceMesh, VertexMap } from "./models";
 
 describe("SurfaceMesh", () => {
   test("creates a SurfaceMesh instance containing the input vertices and faces", () => {
@@ -9,8 +9,8 @@ describe("SurfaceMesh", () => {
 
     const surfaceMesh = new SurfaceMesh(vertices, faces);
 
-    expect(surfaceMesh.vertices).toEqual(vertices);
-    expect(surfaceMesh.faces).toEqual(faces);
+    expect(surfaceMesh.get("vertices")).toEqual(vertices);
+    expect(surfaceMesh.get("faces")).toEqual(faces);
   });
 });
 
@@ -20,10 +20,12 @@ describe("MeshColors", () => {
     const colorMapName = "Blues";
     const colorLimits: [number, number] = [0, 1];
 
-    const meshColors = new MeshColors(intensity, colorMapName, colorLimits);
+    const meshColors = new VertexMap(intensity, colorMapName, colorLimits);
 
     // More blue for higher intensity
-    expect(meshColors.colors[2]).toBeLessThan(meshColors.colors[5]);
+    expect(meshColors.get("colors")[2]).toBeLessThan(
+      meshColors.get("colors")[5],
+    );
   });
 });
 
@@ -35,11 +37,12 @@ describe("Surface", () => {
     const intensity = [0.1, 0.9];
     const colorMapName = "Blues";
     const colorLimits: [number, number] = [0, 1];
-    const meshColors = new MeshColors(intensity, colorMapName, colorLimits);
+    const meshColors = new VertexMap(intensity, colorMapName, colorLimits);
 
-    const surface = new Surface(surfaceMesh, meshColors);
+    const surface = new Surface(vertices, faces);
+    surface.addVertexMap(intensity, colorLimits, colorMapName);
 
     expect(surface.mesh).toEqual(surfaceMesh);
-    expect(surface.colors).toEqual(meshColors);
+    expect(surface.vertexMap[0].get("colors")).toEqual(meshColors);
   });
 });

@@ -1,11 +1,11 @@
-import { describe, it, expect, vi } from 'vitest'
+import { describe, expect, it, vi } from "vitest";
 
 import * as THREE from "three";
-import { getDocElem, createDocElem, minMax, surfaceToMesh } from "./utils";
-import { Surface } from "./surfaceModels";
+import { Surface } from "./models";
+import { createDocElem, getDocElem, minMax, surfaceToMesh } from "./utils";
 
 // vitest mocks are explicit
-vi.mock('./surfaceModels.js');
+vi.mock("./surfaceModels.js");
 
 describe("getDocElem", () => {
   it("should return an HTML element when the element with the given id exists", () => {
@@ -65,7 +65,6 @@ describe("surfaceToMesh", () => {
   it("should convert a Surface object without meshcolors to a THREE.Mesh object", () => {
     // @ts-expect-error because Surface is mocked.
     const surface = new Surface();
-    surface.colors = undefined;
 
     const mesh = surfaceToMesh(surface);
 
