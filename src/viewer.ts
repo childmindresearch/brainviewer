@@ -1,5 +1,7 @@
 import CameraControls from "camera-controls";
+import { NumberArray } from "d3";
 import * as THREE from "three";
+import { ColorInterpolateName } from "./colormaps/d3ColorSchemes";
 import { Surface, VertexMap } from "./models";
 import { surfaceToMesh } from "./utils";
 
@@ -152,10 +154,22 @@ export class ViewerClient {
     );
   }
 
-  public addSurface(surface: Surface): THREE.Mesh {
-    const obj = surfaceToMesh(surface);
-    this.scene.add(obj);
-    return obj;
+  public addSurface(
+    vertices: NumberArray,
+    faces: NumberArray,
+    intensity?: number[],
+    colorMapName: ColorInterpolateName = "Viridis",
+    colorLimits?: [number, number],
+  ): THREE.Mesh {
+    vertices = toFloat32Array(vertices);
+    faces = toUint32Array(faces);
+    const surface = new Surface(vertices, faces);
+    if (intensity) {
+      surface.addVertexMap(intensity, colorMapName, colorLimits);
+    }
+    const mesh = surfaceToMesh(surface);
+    this.scene.add(mesh);
+    return mesh;
   }
 
   public addVertexMap(vertexMap: VertexMap): void {
@@ -204,4 +218,34 @@ function getClicks(event: MouseEvent | TouchEvent, rect: DOMRect) {
   }
 
   return clicks;
+}
+
+/**
+ * Converts a given array to a Uint32Array.
+ * @param array - The array to convert.
+ * @returns A Uint32Array representation of the input array.
+ */
+export function toUint32Array(array: NumberArray): Uint32Array {
+  if (array instanceof Uint32Array) {
+    return array;
+  }
+  if (array instanceof DataView) {
+    return new Uint32Array(array.buffer);
+  }
+  return new Uint32Array(array);
+}
+
+/**
+ * Converts a given array to a Float32Array.
+ * @param array - The array to convert.
+ * @returns A Float32Array representation of the input array.
+ */
+export function toFloat32Array(array: NumberArray): Float32Array {
+  if (array instanceof Float32Array) {
+    return array;
+  }
+  if (array instanceof DataView) {
+    return new Float32Array(array.buffer);
+  }
+  return new Float32Array(array);
 }
