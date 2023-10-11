@@ -1,5 +1,5 @@
 import * as THREE from "three";
-import { Surface } from "./surfaceModels";
+import { Surface } from "./models";
 
 export function getDocElem<T extends HTMLElement>(id: string): T {
   const elem = document.getElementById(id);
@@ -42,20 +42,29 @@ export function minMax(
  * @param surface - The Surface object to convert.
  * @returns A THREE.Mesh object.
  */
-export function surfaceToMesh(surface: Surface): THREE.Mesh {
+export function surfaceToMesh(
+  surface: Surface,
+  meshIndex: number = 0,
+  vertexMapIndex?: number,
+): THREE.Mesh {
   const geometry = new THREE.BufferGeometry();
   geometry.setAttribute(
     "position",
-    new THREE.BufferAttribute(surface.mesh.vertices, 3),
+    new THREE.BufferAttribute(surface.mesh[meshIndex].get("vertices"), 3),
   );
-  geometry.setIndex(new THREE.BufferAttribute(surface.mesh.faces, 1));
+  geometry.setIndex(
+    new THREE.BufferAttribute(surface.mesh[meshIndex].get("faces"), 1),
+  );
   geometry.computeVertexNormals();
 
   let material: THREE.MeshLambertMaterial;
-  if (surface.colors) {
+  if (vertexMapIndex && surface.vertexMap[vertexMapIndex].get("colors")) {
     geometry.setAttribute(
       "color",
-      new THREE.BufferAttribute(surface.colors.colors, 3),
+      new THREE.BufferAttribute(
+        surface.vertexMap[vertexMapIndex].get("colors"),
+        3,
+      ),
     );
     material = new THREE.MeshLambertMaterial({
       vertexColors: true,

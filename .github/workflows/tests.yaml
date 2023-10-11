@@ -21,8 +21,8 @@ jobs:
           cache-dependency-path: package-lock.json
       - run: |
           npm ci
-          npm run build
-          npm run test
+          npx playwright install
+          npm run test:browser
 
   lint:
     runs-on: ubuntu-latest

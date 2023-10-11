@@ -1,9 +1,17 @@
 /// <reference types="vitest" />
-import { defineConfig } from 'vite'
+import { defineConfig } from "vite";
 
 export default defineConfig({
   test: {
-    environment: 'jsdom',
-    // ...
+    browser: {
+      name: "chromium",
+      provider: "playwright",
+    },
+    environment: "jsdom",
+    environmentOptions: {
+      jsdom: {
+        resources: "usable",
+      },
+    },
   },
-})
+});
