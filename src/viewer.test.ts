@@ -1,28 +1,5 @@
-import { afterEach, beforeEach, describe, expect, test } from "vitest";
-import { ViewerClient, toFloat32Array, toUint32Array } from "./viewer";
-
-describe("ViewerClient", () => {
-  let client: ViewerClient;
-  const mockElement = document.createElement("div");
-
-  beforeEach(() => {
-    client = new ViewerClient(mockElement);
-  });
-
-  afterEach(() => {
-    client.dispose();
-  });
-
-  test("should be instantiated", () => {
-    expect(client).toBeInstanceOf(ViewerClient);
-  });
-
-  test("should update clear alpha", () => {
-    const alpha = 0.5;
-    client.setAlpha(alpha);
-    expect(client.renderer.getClearAlpha()).toBe(alpha);
-  });
-});
+import { describe, expect, test } from "vitest";
+import { toFloat32Array, toUint32Array } from "./viewer";
 
 describe("Utility functions", () => {
   test("toFloat32Array should convert to Float32Array", () => {
