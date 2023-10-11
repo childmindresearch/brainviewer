@@ -22,7 +22,7 @@ jobs:
       - run: |
           npm ci
           npm run build
-          npm run test
+          npm run test:browser
 
   lint:
     runs-on: ubuntu-latest

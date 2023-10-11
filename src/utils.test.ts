@@ -1,11 +1,8 @@
-import { describe, expect, it, vi } from "vitest";
+import { describe, expect, it } from "vitest";
 
 import * as THREE from "three";
 import { Surface } from "./models";
 import { createDocElem, getDocElem, minMax, surfaceToMesh } from "./utils";
-
-// vitest mocks are explicit
-vi.mock("./surfaceModels.js");
 
 describe("getDocElem", () => {
   it("should return an HTML element when the element with the given id exists", () => {
