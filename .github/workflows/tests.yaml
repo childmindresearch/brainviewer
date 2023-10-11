@@ -21,7 +21,7 @@ jobs:
           cache-dependency-path: package-lock.json
       - run: |
           npm ci
-          npm run build
+          npx playwright install
           npm run test:browser
 
   lint:
