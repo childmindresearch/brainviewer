@@ -10,7 +10,7 @@ browser.
 BrainViewer can be installed with npm:
 
 ```bash
-npm install @cmi-dair/brainviewer
+npm install @childmindresearch/brainviewer
 ```
 
 ## Usage
