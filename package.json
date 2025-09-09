@@ -1,5 +1,5 @@
 {
-  "name": "@cmi-dair/brainviewer",
+  "name": "@childmindresearch/brainviewer",
   "displayName": "brainviewer",
   "description": "Brain viewer",
   "version": "0.1.4",
@@ -25,11 +25,11 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/cmi-dair/brainviewer.git"
+    "url": "git+https://github.com/childmindresearch/brainviewer.git"
   },
   "type": "module",
   "bugs": {
-    "url": "https://github.com/cmi-dair/brainviewer/issues"
+    "url": "https://github.com/childmindresearch/brainviewer/issues"
   },
   "scripts": {
     "dev": "vite",
