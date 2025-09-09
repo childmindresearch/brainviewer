@@ -22,7 +22,7 @@ jobs:
           npm ci
           npx typedoc src/index.ts --out docs
         name: Create Docs
-      - uses: actions/upload-pages-artifact@v2
+      - uses: actions/upload-pages-artifact@v4
         name: Upload Pages Artifact
         with:
           path: ./docs
