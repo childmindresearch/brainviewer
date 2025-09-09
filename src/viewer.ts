@@ -122,7 +122,7 @@ export class ViewerClient {
     eventName: string,
     callable: (
       evt: Event,
-      intersects?: THREE.Intersection<THREE.Object3D<THREE.Event>>[],
+      intersects?: THREE.Intersection<THREE.Object3D<THREE.Object3DEventMap>>[],
     ) => void,
   ): void {
     const raycastEvents = [
