@@ -16,7 +16,7 @@ jobs:
       - uses: actions/checkout@v5
       - uses: actions/setup-node@v5
         with:
-          node-version: 19
+          node-version: 22
           cache: npm
           cache-dependency-path: package-lock.json
       - run: |
@@ -32,7 +32,7 @@ jobs:
       - name: Use Node.js
         uses: actions/setup-node@v5
         with:
-          node-version: "19.x"
+          node-version: "22.x"
       - run: |
           npm install
           npm run lint
