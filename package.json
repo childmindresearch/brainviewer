@@ -38,16 +38,16 @@
     "test": "vitest"
   },
   "dependencies": {
-    "camera-controls": "^2.7.0",
-    "d3": "^7.8.5",
-    "d3-scale-chromatic": "^3.0.0",
-    "three": "0.150.0"
+    "camera-controls": "^3.1.0",
+    "d3": "^7.9.0",
+    "d3-scale-chromatic": "^3.1.0",
+    "three": "0.180.0"
   },
   "devDependencies": {
-    "@types/d3": "^7.4.0",
-    "@types/d3-scale-chromatic": "^3.0.0",
+    "@types/d3": "^7.4.3",
+    "@types/d3-scale-chromatic": "^3.1.0",
     "@types/node": "^24.3.1",
-    "@types/three": "^0.154.0",
+    "@types/three": "^0.180.0",
     "@typescript-eslint/eslint-plugin": "^8.43.0",
     "@typescript-eslint/parser": "^8.43.0",
     "eslint": "^8.45.0",
