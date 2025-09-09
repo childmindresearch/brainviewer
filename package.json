@@ -2,7 +2,7 @@
   "name": "@childmindresearch/brainviewer",
   "displayName": "brainviewer",
   "description": "Brain viewer",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "main": "./dist/brainviewer.umd.cjs",
   "module": "./dist/brainviewer.js",
   "types": "./dist/index.d.ts",
