@@ -50,11 +50,11 @@
     "@types/three": "^0.180.0",
     "@typescript-eslint/eslint-plugin": "^8.43.0",
     "@typescript-eslint/parser": "^8.43.0",
-    "eslint": "^8.45.0",
-    "jsdom": "^26.1.0",
+    "eslint": "^9.39.0",
+    "jsdom": "^27.1.0",
     "typescript": "^5.9.2",
     "vite": "^7.1.5",
     "vite-plugin-dts": "^4.5.4",
-    "vitest": "^3.2.4"
+    "vitest": "^4.0.6"
   }
 }
